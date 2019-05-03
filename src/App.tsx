@@ -1,26 +1,43 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Col, Grid, Row } from "react-styled-flexboxgrid";
+import styled from "styled-components";
+import Home from "./components/Home";
+import List from "./components/List";
+
+const TitleElement = styled.h1`
+  text-align: center;
+  margin-bottom: 0;
+`;
+
+const DescriptionElement = styled.h4`
+  text-align: center;
+  margin-top: 0.5em;
+`;
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Router>
+        <Grid>
+          <Row center={"xs"}>
+            <Col>
+              <TitleElement>2do2gether</TitleElement>
+            </Col>
+          </Row>
+          <Row center={"xs"}>
+            <Col>
+              <DescriptionElement>
+                Shared to-do list - plan your things together
+              </DescriptionElement>
+            </Col>
+          </Row>
+          <Row>
+            <Route path="/" exact component={Home} />
+            <Route path="/:id" component={List} />
+          </Row>
+        </Grid>
+      </Router>
     );
   }
 }
