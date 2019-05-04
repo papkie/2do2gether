@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import firebase from "../../firebase";
 import Item from "./Item";
 import _ from "lodash";
+import { Grid, Row, Col } from "react-styled-flexboxgrid";
 
 interface Params {
   id: string;
@@ -16,7 +17,8 @@ interface ListItem {
 export default function List({ match }: RouteComponentProps<Params>) {
   const [todos, setTodos] = useState<ListItem[]>([]);
   const [initialized, setInitialized] = useState(false);
-
+  const focusItemRef = useRef<HTMLInputElement>(null);
+  const [focusItemIndex, setFocusItemIndex] = useState(-1);
   const firebaseRef = firebase
     .database()
     .ref("lists")
@@ -34,26 +36,87 @@ export default function List({ match }: RouteComponentProps<Params>) {
       }
     };
     fetchData();
+    if (focusItemIndex > -1 && focusItemRef && focusItemRef.current) {
+      focusItemRef.current.focus();
+      setFocusItemIndex(-1);
+    }
   });
 
-  const updateItem = (id: number, done: boolean, text: string) => {
+  async function updateTodos(updatedTodos: ListItem[]) {
+    await setTodos(updatedTodos);
+    await firebaseRef.set(updatedTodos);
+  }
+
+  const updateItemText = (id: number, text: string) => {
     const updatedTodos = _.cloneDeep(todos);
-    _.set(updatedTodos, id, { done, text });
-    setTodos(updatedTodos);
-    firebaseRef.set(updatedTodos);
+    _.set(updatedTodos, id + ".text", text);
+    updateTodos(updatedTodos);
+  };
+
+  const updateItemDone = (id: number, done: boolean) => {
+    const updatedTodos = _.cloneDeep(todos);
+    _.set(updatedTodos, id + ".done", done);
+    updateTodos(updatedTodos);
+  };
+
+  const addItemAfter = async (id: number) => {
+    if (_.get(todos, id).text !== "") {
+      const updatedTodos = _.cloneDeep(todos);
+      updatedTodos.splice(id + 1, 0, {
+        done: false,
+        text: ""
+      });
+      setFocusItemIndex(id + 1);
+      await updateTodos(updatedTodos);
+    }
+  };
+
+  const addItemAtEnd = async () => {
+    if (_.get(todos, todos.length - 1).text !== "") {
+      const updatedTodos = _.cloneDeep(todos);
+      updatedTodos.splice(todos.length, 0, {
+        done: false,
+        text: ""
+      });
+      setFocusItemIndex(todos.length);
+      await updateTodos(updatedTodos);
+    }
+  };
+
+  const deleteItem = (id: number) => {
+    const updatedTodos = _.cloneDeep(todos);
+    _.pullAt(updatedTodos, id);
+    updateTodos(updatedTodos);
   };
 
   return (
-    <div>
+    <Grid>
       {todos.map((todo, index) => (
-        <Item
-          id={index}
-          done={todo.done}
-          text={todo.text}
-          onChange={updateItem}
-          key={index}
-        />
+        <Row key={index} center="xs">
+          <Col xs={12} md={6}>
+            <Item
+              id={index}
+              done={todo.done}
+              text={todo.text}
+              onChange={updateItemText}
+              onDone={updateItemDone}
+              onEnter={addItemAfter}
+              onDelete={deleteItem}
+              ref={index === focusItemIndex ? focusItemRef : undefined}
+            />
+          </Col>
+        </Row>
       ))}
-    </div>
+      <Row key={todos.length} center="xs">
+        <Col xs={12} md={6}>
+          <Item
+            id={todos.length}
+            done={false}
+            text={""}
+            onFocus={() => addItemAtEnd()}
+          />
+        </Col>
+      </Row>
+    </Grid>
   );
 }

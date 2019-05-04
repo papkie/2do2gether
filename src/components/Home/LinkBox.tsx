@@ -1,5 +1,6 @@
 import React, { useRef, useState, MouseEvent } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Input = styled.input`
   height: 48px;
@@ -42,8 +43,13 @@ export default function LinkBox(props: Props) {
   }
 
   return (
-    <Wrapper>
-      <Input value={props.link} ref={textRef} readOnly onClick={() => location.href = props.link} />
+    <Wrapper className="xD">
+      <Input
+        value={props.link}
+        ref={textRef}
+        readOnly
+        onClick={() => (location.href = props.link)}
+      />
       <Button onClick={copyToClipboard}>{copySuccess || "Copy"}</Button>
     </Wrapper>
   );
