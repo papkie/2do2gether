@@ -11,23 +11,29 @@ const Input = styled.input`
   height: 18px;
 `;
 
-const DoneButton = styled.button`
+const DoneButton = styled.span`
   width: 18px;
   height: 24px;
   padding: 0 16px;
   color: black;
   border: none;
   cursor: pointer;
+  text-align: center;
+  align-content: center;
+  line-height: 20px;
 `;
 
 const DoneButtonDisabled = styled(DoneButton)`
   color: gray;
 `;
 
-const DeleteButton = styled.button`
+const DeleteButton = styled.span`
   color: black;
   border: none;
   cursor: pointer;
+  font-size: 10px;
+  line-height: 20px;
+  padding-left: 5px;
 `;
 
 const DeleteButtonDisabled = styled(DeleteButton)`
