@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   display: flex;
+  margin-bottom: 0.5em;
 `;
 
 const Input = styled.input`
@@ -11,19 +12,25 @@ const Input = styled.input`
   height: 18px;
 `;
 
-const DoneButton = styled.span`
-  width: 18px;
-  height: 24px;
-  padding: 0 16px;
+const TodoButton = styled.div`
+  width: 25px;
+  padding: 0;
+  margin-right: 0.5em;
   color: black;
   border: none;
   cursor: pointer;
   text-align: center;
   align-content: center;
-  line-height: 20px;
+  border: 1px solid gray;
+  border-radius: 50%;
 `;
 
-const DoneButtonDisabled = styled(DoneButton)`
+const DoneButton = styled(TodoButton)`
+  color: gray;
+  background: gray;
+`;
+
+const DoneButtonDisabled = styled(TodoButton)`
   color: gray;
 `;
 
@@ -64,12 +71,13 @@ export default React.forwardRef(function Item(
 ) {
   return (
     <Wrapper>
-      {onDone && (
-        <DoneButton onClick={() => onDone(id, !done)}>
-          {done ? "v" : "x"}
-        </DoneButton>
-      )}
-      {!onDone && <DoneButtonDisabled>{done ? "v" : "x"}</DoneButtonDisabled>}
+      {onDone &&
+        (done ? (
+          <DoneButton onClick={() => onDone(id, !done)} />
+        ) : (
+          <TodoButton onClick={() => onDone(id, !done)} />
+        ))}
+      {!onDone && <DoneButtonDisabled>{done ? "v" : ""}</DoneButtonDisabled>}
 
       <Input
         value={text}
