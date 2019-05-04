@@ -43,7 +43,7 @@ export default function LinkBox(props: Props) {
   }
 
   return (
-    <Wrapper className="xD">
+    <Wrapper>
       <Input
         value={props.link}
         ref={textRef}

@@ -93,7 +93,7 @@ export default function List({ match }: RouteComponentProps<Params>) {
     <Grid>
       {todos.map((todo, index) => (
         <Row key={index} center="xs">
-          <Col xs={12} md={6}>
+          <Col xs={10} md={6}>
             <Item
               id={index}
               done={todo.done}
@@ -108,7 +108,7 @@ export default function List({ match }: RouteComponentProps<Params>) {
         </Row>
       ))}
       <Row key={todos.length} center="xs">
-        <Col xs={12} md={6}>
+        <Col xs={10} md={6}>
           <Item
             id={todos.length}
             done={false}

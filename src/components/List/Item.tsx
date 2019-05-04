@@ -5,16 +5,20 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   display: flex;
   margin-bottom: 0.5em;
+  flex: auto;
 `;
 
 const Input = styled.input`
-  width: 100%;
-  height: 18px;
+  height: 20px;
+  flex: 1;
+  background: white;
+  border: 1px solid #ddd;
+  padding-left: 0.5em;
 `;
 
 const TodoButton = styled.div`
-  width: 25px;
-  padding: 0;
+  width: 22px;
+  height: 22px;
   margin-right: 0.5em;
   color: black;
   border: none;
@@ -26,8 +30,8 @@ const TodoButton = styled.div`
 `;
 
 const DoneButton = styled(TodoButton)`
-  color: gray;
-  background: gray;
+  color: #cf9;
+  background: #cf9;
 `;
 
 const DoneButtonDisabled = styled(TodoButton)`
@@ -35,12 +39,15 @@ const DoneButtonDisabled = styled(TodoButton)`
 `;
 
 const DeleteButton = styled.span`
+  width: 22px;
+  height: 22px;
   color: black;
   border: none;
   cursor: pointer;
   font-size: 10px;
-  line-height: 20px;
+  line-height: 22px;
   padding-left: 5px;
+  text-align: center;
 `;
 
 const DeleteButtonDisabled = styled(DeleteButton)`
@@ -91,9 +98,9 @@ export default React.forwardRef(function Item(
         ref={ref}
       />
       {onDelete && (
-        <DeleteButton onClick={() => onDelete(id)}>[delete]</DeleteButton>
+        <DeleteButton onClick={() => onDelete(id)}>x</DeleteButton>
       )}
-      {!onDelete && <DeleteButtonDisabled>[delete]</DeleteButtonDisabled>}
+      {!onDelete && <DeleteButtonDisabled>x</DeleteButtonDisabled>}
     </Wrapper>
   );
 });
