@@ -1,6 +1,5 @@
-import React, { useRef, useState, MouseEvent } from "react";
+import React, { MouseEvent, useRef, useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 const Input = styled.input`
   height: 48px;

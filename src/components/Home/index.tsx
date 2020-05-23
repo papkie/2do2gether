@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-
-import { Grid, Row, Col } from "react-styled-flexboxgrid";
+import { Col, Grid, Row } from "react-styled-flexboxgrid";
 import LinkGenerate from "./LinkGenerate";
 
 export default class Home extends Component {

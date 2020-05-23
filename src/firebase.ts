@@ -7,7 +7,7 @@ const config = {
   databaseURL: "https://do2gether-57493.firebaseio.com",
   projectId: "do2gether-57493",
   storageBucket: "do2gether-57493.appspot.com",
-  messagingSenderId: "119136473843"
+  messagingSenderId: "119136473843",
 };
 
 firebase.initializeApp(config);

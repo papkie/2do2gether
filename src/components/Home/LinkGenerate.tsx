@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-
 import styled from "styled-components";
-import LinkBox from "./LinkBox";
 import firebase from "../../firebase";
+import LinkBox from "./LinkBox";
 
 const Wrapper = styled.div`
   margin-top: 1em;
@@ -25,7 +24,7 @@ export default class LinkGenerate extends Component<{}, State> {
     super(props);
 
     this.state = {
-      url: null
+      url: null,
     };
   }
 
@@ -34,11 +33,11 @@ export default class LinkGenerate extends Component<{}, State> {
     const result = await firebaseRef.push([
       {
         text: "First item",
-        done: false
-      }
+        done: false,
+      },
     ]);
     this.setState({
-      url: result.key
+      url: result.key,
     });
   };
 

@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import _ from "lodash";
+import React, { useEffect, useRef, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
+import { Col, Grid, Row } from "react-styled-flexboxgrid";
 import firebase from "../../firebase";
 import Item from "./Item";
-import _ from "lodash";
-import { Grid, Row, Col } from "react-styled-flexboxgrid";
 
 interface Params {
   id: string;
@@ -19,15 +19,12 @@ export default function List({ match }: RouteComponentProps<Params>) {
   const [initialized, setInitialized] = useState(false);
   const focusItemRef = useRef<HTMLInputElement>(null);
   const [focusItemIndex, setFocusItemIndex] = useState(-1);
-  const firebaseRef = firebase
-    .database()
-    .ref("lists")
-    .child(match.params.id);
+  const firebaseRef = firebase.database().ref("lists").child(match.params.id);
 
   useEffect(() => {
     const fetchData = async () => {
       if (!initialized) {
-        firebaseRef.on("value", v => {
+        firebaseRef.on("value", (v) => {
           if (v) {
             setTodos(v.val());
           }
@@ -64,7 +61,7 @@ export default function List({ match }: RouteComponentProps<Params>) {
       const updatedTodos = _.cloneDeep(todos);
       updatedTodos.splice(id + 1, 0, {
         done: false,
-        text: ""
+        text: "",
       });
       setFocusItemIndex(id + 1);
       await updateTodos(updatedTodos);
@@ -76,7 +73,7 @@ export default function List({ match }: RouteComponentProps<Params>) {
       const updatedTodos = _.cloneDeep(todos);
       updatedTodos.splice(todos.length, 0, {
         done: false,
-        text: ""
+        text: "",
       });
       setFocusItemIndex(todos.length);
       await updateTodos(updatedTodos);

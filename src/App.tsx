@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import { Col, Grid, Row } from "react-styled-flexboxgrid";
 import styled, { ThemeProvider } from "styled-components";
 import Home from "./components/Home";
@@ -30,15 +30,15 @@ const theme = {
     container: {
       sm: 46, // rem
       md: 61, // rem
-      lg: 76 // rem
+      lg: 76, // rem
     },
     breakpoints: {
       xs: 0, // em
       sm: 48, // em
       md: 64, // em
-      lg: 75 // em
-    }
-  }
+      lg: 75, // em
+    },
+  },
 };
 
 class App extends Component {

@@ -28,21 +28,21 @@ const TodoButton = styled.div`
   justify-content: center;
 
   border: none;
-  cursor: pointer;  
+  cursor: pointer;
   border: 1px solid gray;
   border-radius: 50%;
 `;
 
 const DoneButton = styled(TodoButton)`
   fill: gray;
-  font-size: 18px;  
+  font-size: 18px;
   background: #cf9;
 `;
 
 const DoneIcon = styled(DoneIconRaw)`
   width: 14px;
   height: 14px;
-`
+`;
 
 const DoneButtonDisabled = styled(TodoButton)`
   color: gray;
@@ -73,7 +73,7 @@ export default React.forwardRef(function Item(
     onEnter,
     onFocus,
     onDelete,
-    onDone
+    onDone,
   }: {
     id: number;
     done: boolean;
@@ -102,13 +102,13 @@ export default React.forwardRef(function Item(
 
       <Input
         value={text}
-        onChange={e => onChange && onChange(id, e.target.value)}
-        onKeyDown={e => {
+        onChange={(e) => onChange && onChange(id, e.target.value)}
+        onKeyDown={(e) => {
           if (e.key === "Enter") {
             onEnter && onEnter(id, (e.target as any).value);
           }
         }}
-        onFocus={e => onFocus && onFocus()}
+        onFocus={(e) => onFocus && onFocus()}
         ref={ref}
       />
       {onDelete && <DeleteButton onClick={() => onDelete(id)}>x</DeleteButton>}
